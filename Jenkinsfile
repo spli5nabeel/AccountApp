@@ -18,7 +18,7 @@ pipeline {
         stage('Build') {
             steps {
                 println "Inside build package..." 
-                withMaven(maven: 'maven_3_6_3') {
+                withMaven {
                     sh "mvn clean verify"
                 }  
                          
