@@ -15,6 +15,9 @@ pipeline {
         }
         stage('SonarQube'){
             steps{
+                withSonarQubeEnv('sonarqube') {
+                    sh "${scannerHome}/bin/sonar-scanner"
+                }
                 println "Inside SonarQube"
             }
         }
