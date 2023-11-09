@@ -13,9 +13,9 @@ pipeline {
             spec:
             containers:
             - name: bootvar-container
-                image: alpine:latest
-                tty: true
-                command: ['cat']
+              image: alpine:latest
+              tty: true
+              command: ['cat']
             '''
         }
     }
