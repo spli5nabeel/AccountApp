@@ -1,32 +1,24 @@
 pipeline {
-    agent any
-
-    tools{
-        maven '3.9.5'
-        
-
-    }
-
-podTemplate(containers: [
-    containerTemplate(
-        name: 'jnlp', 
-        image: 'jenkins/inbound-agent:latest'
-        )
-  ]) {
-
-    node(POD_LABEL) {
-        stage('Get a Maven project') {
-            container('jnlp') {
-                stage('Shell Execution') {
-                    sh '''
-                    echo "Hello! I am executing shell"
-                    '''
-                }
-            }
+    agent {
+        kubernetes {
+            label "build-pod"
+            cloud "kubernetes"
+            yaml '''
+            apiVersion: v1
+            kind: Pod
+            metadata:
+            namespace: jenkins
+            labels:
+                job: bootvar-build-pod
+            spec:
+            containers:
+            - name: bootvar-container
+                image: alpine:latest
+                tty: true
+                command: ['cat']
+            '''
         }
-
     }
-}
     stages {
         stage('Initialize'){
             steps{
